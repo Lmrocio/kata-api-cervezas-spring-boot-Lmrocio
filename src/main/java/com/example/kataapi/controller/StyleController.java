@@ -16,14 +16,12 @@ public class StyleController {
     @Autowired
     private StyleRepository styleRepository;
 
-    // GET - Obtener todos los estilos
     @GetMapping
     public ResponseEntity<List<Style>> getAllStyles() {
         List<Style> styles = styleRepository.findAll();
         return ResponseEntity.ok(styles);
     }
 
-    // GET - Obtener un estilo por ID
     @GetMapping("/{id}")
     public ResponseEntity<Style> getStyleById(@PathVariable Integer id) {
         Optional<Style> style = styleRepository.findById(id);

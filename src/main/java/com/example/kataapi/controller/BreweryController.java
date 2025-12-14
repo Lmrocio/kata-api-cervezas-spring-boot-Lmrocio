@@ -16,14 +16,12 @@ public class BreweryController {
     @Autowired
     private BreweryRepository breweryRepository;
 
-    // GET - Obtener todas las cerveceras
     @GetMapping
     public ResponseEntity<List<Brewery>> getAllBreweries() {
         List<Brewery> breweries = breweryRepository.findAll();
         return ResponseEntity.ok(breweries);
     }
 
-    // GET - Obtener una cervecera por ID
     @GetMapping("/{id}")
     public ResponseEntity<Brewery> getBreweryById(@PathVariable Integer id) {
         Optional<Brewery> brewery = breweryRepository.findById(id);

@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Brewery {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -31,6 +30,9 @@ public class Brewery {
     @Column(name = "state")
     private String state;
 
+    @Column(name = "code")
+    private String code;
+
     @Column(name = "country")
     private String country;
 
@@ -40,5 +42,15 @@ public class Brewery {
     @Column(name = "website")
     private String website;
 
-}
+    @Column(name = "filepath")
+    private String filepath;
 
+    @Column(name = "descript")
+    private String descript;
+
+    @Column(name = "add_user")
+    private Integer addUser;
+
+    @Column(name = "last_mod")
+    private java.sql.Timestamp lastMod;
+}

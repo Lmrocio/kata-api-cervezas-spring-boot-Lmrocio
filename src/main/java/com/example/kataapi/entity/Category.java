@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Category {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -19,5 +18,6 @@ public class Category {
     @Column(name = "cat_name")
     private String catName;
 
+    @Column(name = "last_mod")
+    private java.sql.Timestamp lastMod;
 }
-

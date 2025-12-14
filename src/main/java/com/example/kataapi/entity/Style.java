@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Style {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -22,5 +21,6 @@ public class Style {
     @Column(name = "style_name")
     private String styleName;
 
+    @Column(name = "last_mod")
+    private java.sql.Timestamp lastMod;
 }
-

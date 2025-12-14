@@ -17,14 +17,12 @@ public class BeerController {
     @Autowired
     private BeerRepository beerRepository;
 
-    // GET - Obtener todas las cervezas
     @GetMapping
     public ResponseEntity<List<Beer>> getAllBeers() {
         List<Beer> beers = beerRepository.findAll();
         return ResponseEntity.ok(beers);
     }
 
-    // GET - Obtener una cerveza por ID
     @GetMapping("/{id}")
     public ResponseEntity<Beer> getBeerById(@PathVariable Integer id) {
         Optional<Beer> beer = beerRepository.findById(id);
@@ -35,14 +33,57 @@ public class BeerController {
         }
     }
 
-    // POST - Crear una nueva cerveza
     @PostMapping
-    public ResponseEntity<Beer> createBeer(@RequestBody Beer beer) {
-        Beer savedBeer = beerRepository.save(beer);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedBeer);
+    public ResponseEntity<?> createBeer(@RequestBody Beer beer) {
+        try {
+
+            if (beer.getName() == null || beer.getName().trim().isEmpty()) {
+                beer.setName("");
+            }
+            if (beer.getBreweryId() == null) {
+                beer.setBreweryId(0);
+            }
+            if (beer.getCatId() == null) {
+                beer.setCatId(0);
+            }
+            if (beer.getStyleId() == null) {
+                beer.setStyleId(0);
+            }
+            if (beer.getAbv() == null) {
+                beer.setAbv(0.0);
+            }
+            if (beer.getIbu() == null) {
+                beer.setIbu(0.0);
+            }
+            if (beer.getSrm() == null) {
+                beer.setSrm(0.0);
+            }
+            if (beer.getUpc() == null) {
+                beer.setUpc(0);
+            }
+            if (beer.getFilepath() == null) {
+                beer.setFilepath("");
+            }
+            if (beer.getDescript() == null) {
+                beer.setDescript("");
+            }
+            if (beer.getAddUser() == null) {
+                beer.setAddUser(0);
+            }
+
+            // Establecer lastMod con la hora actual si no está establecido
+            if (beer.getLastMod() == null) {
+                beer.setLastMod(new java.sql.Timestamp(System.currentTimeMillis()));
+            }
+
+            Beer savedBeer = beerRepository.save(beer);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedBeer);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error creating beer: " + e.getMessage());
+        }
     }
 
-    // PUT - Actualizar una cerveza (total o parcial)
     @PutMapping("/{id}")
     public ResponseEntity<Beer> updateBeer(@PathVariable Integer id, @RequestBody Beer beerDetails) {
         Optional<Beer> optionalBeer = beerRepository.findById(id);
@@ -50,15 +91,14 @@ public class BeerController {
         if (optionalBeer.isPresent()) {
             Beer beer = optionalBeer.get();
 
-            // Actualizar solo los campos que vienen en el request
             if (beerDetails.getName() != null) {
                 beer.setName(beerDetails.getName());
             }
             if (beerDetails.getBreweryId() != null) {
                 beer.setBreweryId(beerDetails.getBreweryId());
             }
-            if (beerDetails.getCategoryId() != null) {
-                beer.setCategoryId(beerDetails.getCategoryId());
+            if (beerDetails.getCatId() != null) {
+                beer.setCatId(beerDetails.getCatId());
             }
             if (beerDetails.getStyleId() != null) {
                 beer.setStyleId(beerDetails.getStyleId());
@@ -69,9 +109,23 @@ public class BeerController {
             if (beerDetails.getIbu() != null) {
                 beer.setIbu(beerDetails.getIbu());
             }
-            if (beerDetails.getDescription() != null) {
-                beer.setDescription(beerDetails.getDescription());
+            if (beerDetails.getDescript() != null) {
+                beer.setDescript(beerDetails.getDescript());
             }
+            if (beerDetails.getSrm() != null) {
+                beer.setSrm(beerDetails.getSrm());
+            }
+            if (beerDetails.getUpc() != null) {
+                beer.setUpc(beerDetails.getUpc());
+            }
+            if (beerDetails.getFilepath() != null) {
+                beer.setFilepath(beerDetails.getFilepath());
+            }
+            if (beerDetails.getAddUser() != null) {
+                beer.setAddUser(beerDetails.getAddUser());
+            }
+
+            beer.setLastMod(new java.sql.Timestamp(System.currentTimeMillis()));
 
             Beer updatedBeer = beerRepository.save(beer);
             return ResponseEntity.ok(updatedBeer);
@@ -80,7 +134,6 @@ public class BeerController {
         }
     }
 
-    // DELETE - Eliminar una cerveza
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBeer(@PathVariable Integer id) {
         Optional<Beer> beer = beerRepository.findById(id);

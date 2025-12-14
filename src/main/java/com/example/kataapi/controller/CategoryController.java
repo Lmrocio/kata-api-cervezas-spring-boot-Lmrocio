@@ -16,14 +16,12 @@ public class CategoryController {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    // GET - Obtener todas las categorías
     @GetMapping
     public ResponseEntity<List<Category>> getAllCategories() {
         List<Category> categories = categoryRepository.findAll();
         return ResponseEntity.ok(categories);
     }
 
-    // GET - Obtener una categoría por ID
     @GetMapping("/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable Integer id) {
         Optional<Category> category = categoryRepository.findById(id);
