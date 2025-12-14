@@ -34,6 +34,11 @@ Una vez levantados los contenedores, la base de datos está disponible en:
 
 Además, tengo acceso a una interfaz web de Adminer en `http://localhost:8888` para gestionar la base de datos de forma visual si lo necesito.
 
+
+<img width="1913" height="601" alt="Captura de pantalla 2025-12-14 173936" src="https://github.com/user-attachments/assets/76210ea4-a5fa-4cb8-b262-e5906bccfa8d" />
+
+
+
 ### Credenciales y conexión
 
 Las credenciales están definidas en el archivo `docker-compose.yml`:
